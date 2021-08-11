@@ -3,6 +3,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 public class Client {
     JFrame frame = new JFrame("Client");
@@ -50,6 +51,28 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendMessageToServer(String message) {
+        try {
+            outputStream.writeUTF(message);
+            System.out.println("To server : " + message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String receiveMessageToServer() {
+        try {
+            String receiveMessage = inputStream.readUTF();
+            System.out.println("From server : " + receiveMessage);
+
+            return receiveMessage;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static void main(String[] args) {

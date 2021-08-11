@@ -44,6 +44,28 @@ public class Server {
         }
     }
 
+    public void sendMessageToClient(String message) {
+        try {
+            outputStream.writeUTF(message);
+            System.out.println("To client : " + message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String receiveMessageToClient() {
+        try {
+            String receiveMessage = inputStream.readUTF();
+            System.out.println("From client : " + receiveMessage);
+
+            return receiveMessage;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public void makeServer(int port) {
         try {
 
