@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -10,6 +12,9 @@ public class Client {
     String host;
     int port;
     Socket clientSocket;
+
+    DataOutputStream outputStream;
+    DataInputStream inputStream;
 
     public void showClientView() {
         textArea.setEditable(false);
@@ -29,9 +34,32 @@ public class Client {
         }
     }
 
+    public void connectInputStream() {
+        try {
+            inputStream = new DataInputStream(clientSocket.getInputStream());
+            System.out.println("Client.connectInputStream");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void connectOutputStream() {
+        try {
+            outputStream = new DataOutputStream(clientSocket.getOutputStream());
+            System.out.println("Client.connectOutputStream");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
+
         Client client = new Client();
+
         client.showClientView();
+
         client.throwSocket("localhost", 8081);
+        client.connectInputStream();
+        client.connectOutputStream();
     }
 }
