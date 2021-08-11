@@ -14,8 +14,11 @@ public class Server {
         makeServer(port);
         connectInputStream();
         connectOutputStream();
-        sendMessageToClient("Hi Client");
-        String receiveMessage = receiveMessageToClient();
+
+        while(true){
+            String msg = receiveMessageToClient();
+            textArea.append("Client : " + msg + "\n");
+        }
     }
 
     JFrame frame = new JFrame("Server");
@@ -36,6 +39,18 @@ public class Server {
         frame.add("South", inputText);
         frame.setSize(300, 500);
         frame.setVisible(true);
+        eventHandler();
+    }
+    public void eventHandler() {
+        inputText.addActionListener(actionEvent -> {
+            String sendMsg = inputText.getText();
+
+            sendMessageToClient(sendMsg);
+            inputText.setText("");
+
+            textArea.append("Server : " + sendMsg + "\n");
+            System.out.println("Server.eventHandler");
+        });
     }
 
     public void connectInputStream() {

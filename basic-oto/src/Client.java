@@ -14,8 +14,11 @@ public class Client {
         throwSocket(host, port);
         connectInputStream();
         connectOutputStream();
-        sendMessageToServer("Hi server");
-        receiveMessageToServer();
+
+        while(true){
+            String msg = receiveMessageToServer();
+            textArea.append("Server : " + msg + "\n");
+        }
     }
 
     JFrame frame = new JFrame("Client");
@@ -36,6 +39,17 @@ public class Client {
         frame.add("South", inputText);
         frame.setSize(300, 500);
         frame.setVisible(true);
+        eventHandler();
+    }
+    public void eventHandler() {
+        inputText.addActionListener(actionEvent -> {
+            String sendMsg = inputText.getText();
+
+            sendMessageToServer(sendMsg);
+            inputText.setText("");
+            textArea.append("Client : " + sendMsg + "\n");
+            System.out.println("Client.eventHandler");
+        });
     }
 
     public void throwSocket(String host, int port) {
