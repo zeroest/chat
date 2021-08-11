@@ -3,9 +3,21 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 public class Client {
+    public Client(String host, int port) {
+        this.host = host;
+        this.port = port;
+
+        showClientView();
+
+        throwSocket(host, port);
+        connectInputStream();
+        connectOutputStream();
+        sendMessageToServer("Hi server");
+        receiveMessageToServer();
+    }
+
     JFrame frame = new JFrame("Client");
     JTextArea textArea = new JTextArea();
     JTextField inputText = new JTextField();
@@ -76,13 +88,6 @@ public class Client {
     }
 
     public static void main(String[] args) {
-
-        Client client = new Client();
-
-        client.showClientView();
-
-        client.throwSocket("localhost", 8081);
-        client.connectInputStream();
-        client.connectOutputStream();
+        Client client = new Client("localhost", 8081);
     }
 }

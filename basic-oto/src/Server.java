@@ -6,6 +6,18 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
+    public Server(int port) {
+        this.port = port;
+
+        showClientView();
+
+        makeServer(port);
+        connectInputStream();
+        connectOutputStream();
+        sendMessageToClient("Hi Client");
+        String receiveMessage = receiveMessageToClient();
+    }
+
     JFrame frame = new JFrame("Server");
     JTextArea textArea = new JTextArea();
     JTextField inputText = new JTextField();
@@ -86,14 +98,6 @@ public class Server {
     }
 
     public static void main(String[] args) {
-
-        Server server = new Server();
-
-        server.showClientView();
-
-        server.makeServer(8081);
-        server.connectInputStream();
-        server.connectOutputStream();
-
+        Server server = new Server(8081);
     }
 }
